@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spanish Word Spelling</title>
+</head>
+<body>
+    <h1>Enter the spelling of the Spanish word</h1>
+    <button onclick="playWord()">Play Word</button>
+    <form id="wordForm">
+        <label for="word">Word:</label><br>
+        <input type="text" id="word" name="word"><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        var words = ['hola', 'adios', 'gracias', 'por favor', 'buenos dias']; // Your list of words
+        var currentWord = '';
+
+        function playWord() {
+            // Select a random word from the list
+            currentWord = words[Math.floor(Math.random() * words.length)];
+
+            // Use speechSynthesis to speak the word
+            var utterance = new SpeechSynthesisUtterance(currentWord);
+            utterance.lang = 'es-ES'; // Set the language to Spanish
+            window.speechSynthesis.speak(utterance);
+        }
+
+        document.getElementById('wordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from being submitted
+
+            var userWord = document.getElementById('word').value;
+            if (userWord === currentWord) {
+                alert('Correct!');
+            } else {
+                alert('Incorrect, try again.');
+            }
+        });
+    </script>
+</body>
+</html>
