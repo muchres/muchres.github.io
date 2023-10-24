@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+header {
+background-color: #666;
+padding: 30px;
+text-align: center;
+font-size: 35px;
+color: white;
+}
+
+@media (max-width: 600px) {
+    nav, article {
+        width: 100%;
+        height: auto;
+    }
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+button {
+    padding: 10px 20px;
+    font-size: 20px;
+}
