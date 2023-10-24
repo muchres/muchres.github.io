@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Home</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-<button onclick="location.href='es1.html'" type="button">
-    ESP1-verbos
-</button>
+    <div class="container">
+        <h1>Hello World</h1>
+        <p>I'm hosted with GitHub Pages.</p>
+    <button onclick="location.href='es1.html'" type="button">
+        ESP1-verbos
+    </button>
 </body>
 </html>
