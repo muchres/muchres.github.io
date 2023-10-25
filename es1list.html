@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Spanish Words List 1</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <title>Spanish Words List 1</title>
 </head>
 <body>
     <div class="center">
         <input type="file" id="fileInput" accept=".txt">
+        <button onclick="importList()">Import List</button>
         <br>
-        <textarea id="textInput" placeholder="Enter words separated by commas"></textarea>
+        <textarea id="textInput" style="width: 75%; height: 100px;" placeholder="Enter words separated by line breaks"></textarea>
         <br>
-        <button onclick="displayWords()">Display Words</button>
+        <button onclick="addNewWords()">Add New Word</button>
         <div id="wordList"></div>
     </div>
 
     <script>
-        function displayWords() {
+        let words = [];
+
+        function importList() {
             let fileInput = document.getElementById('fileInput');
-            let textInput = document.getElementById('textInput');
             let wordList = document.getElementById('wordList');
 
             // Clear the list
             wordList.innerHTML = '';
 
-            let words = [];
             if (fileInput.files.length > 0) {
                 // Read the file
                 let fileReader = new FileReader();
                 fileReader.onload = function(fileLoadedEvent){
                     let textFromFileLoaded = fileLoadedEvent.target.result;
-                    words = textFromFileLoaded.split(',');
+                    words = textFromFileLoaded.split('\n');
                     displayWordBoxes(words);
                 };
                 fileReader.readAsText(fileInput.files[0], "UTF-8");
-            } else if (textInput.value.trim() !== '') {
+            }
+        }
+
+        function addNewWords() {
+            let textInput = document.getElementById('textInput');
+            let wordList = document.getElementById('wordList');
+
+            if (textInput.value.trim() !== '') {
                 // Get words from the text box
-                words = textInput.value.split(',');
+                let newWords = textInput.value.split('\n');
+                words = words.concat(newWords);
+                // Clear the list
+                wordList.innerHTML = '';
                 displayWordBoxes(words);
             }
         }
@@ -52,8 +63,13 @@
 
                 let deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Delete';
+                deleteButton.style.float = 'right';
                 deleteButton.onclick = function() {
                     div.remove();
+                    let index = words.indexOf(div.textContent.trim());
+                    if (index > -1) {
+                        words.splice(index, 1);
+                    }
                 };
 
                 div.appendChild(deleteButton);
@@ -63,4 +79,5 @@
     </script>
 </body>
 </html>
+
 
