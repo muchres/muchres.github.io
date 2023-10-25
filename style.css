@@ -19,6 +19,7 @@ color: white;
     margin: 5px;
     padding: 5px;
     display: inline-block;
+    width: 75%;
 }
 .center {
     display: flex;
