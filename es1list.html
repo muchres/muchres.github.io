@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spanish Words List 1</title>
+</head>
+<body>
+    <input type="file" id="fileInput" accept=".txt">
+    <br>
+    <textarea id="textInput" placeholder="Enter words separated by commas"></textarea>
+    <br>
+    <button onclick="displayWords()">Display Words</button>
+    <ul id="wordList"></ul>
+
+    <script>
+        function displayWords() {
+            let fileInput = document.getElementById('fileInput');
+            let textInput = document.getElementById('textInput');
+            let wordList = document.getElementById('wordList');
+
+            // Clear the list
+            wordList.innerHTML = '';
+
+            let words = [];
+            if (fileInput.files.length > 0) {
+                // Read the file
+                let fileReader = new FileReader();
+                fileReader.onload = function(fileLoadedEvent){
+                    let textFromFileLoaded = fileLoadedEvent.target.result;
+                    words = textFromFileLoaded.split(',');
+                };
+                fileReader.readAsText(fileInput.files[0], "UTF-8");
+            } else if (textInput.value.trim() !== '') {
+                // Get words from the text box
+                words = textInput.value.split(',');
+            }
+
+            // Sort and display the words
+            words.sort();
+            for (let i = 0; i < words.length; i++) {
+                let li = document.createElement('li');
+                li.textContent = words[i].trim();
+                wordList.appendChild(li);
+            }
+        }
+    </script>
+</body>
+</html>
