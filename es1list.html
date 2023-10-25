@@ -2,6 +2,17 @@
 <html>
 <head>
     <title>Spanish Words List 1</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .wordBox {
+            border: 1px solid black;
+            margin: 5px;
+            padding: 5px;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
     <input type="file" id="fileInput" accept=".txt">
@@ -9,7 +20,7 @@
     <textarea id="textInput" placeholder="Enter words separated by commas"></textarea>
     <br>
     <button onclick="displayWords()">Display Words</button>
-    <ul id="wordList"></ul>
+    <div id="wordList"></div>
 
     <script>
         function displayWords() {
@@ -27,21 +38,35 @@
                 fileReader.onload = function(fileLoadedEvent){
                     let textFromFileLoaded = fileLoadedEvent.target.result;
                     words = textFromFileLoaded.split(',');
+                    displayWordBoxes(words);
                 };
                 fileReader.readAsText(fileInput.files[0], "UTF-8");
             } else if (textInput.value.trim() !== '') {
                 // Get words from the text box
                 words = textInput.value.split(',');
+                displayWordBoxes(words);
             }
+        }
 
+        function displayWordBoxes(words) {
             // Sort and display the words
             words.sort();
             for (let i = 0; i < words.length; i++) {
-                let li = document.createElement('li');
-                li.textContent = words[i].trim();
-                wordList.appendChild(li);
+                let div = document.createElement('div');
+                div.className = 'wordBox';
+                div.textContent = words[i].trim();
+
+                let deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = function() {
+                    div.remove();
+                };
+
+                div.appendChild(deleteButton);
+                wordList.appendChild(div);
             }
         }
     </script>
 </body>
 </html>
+
