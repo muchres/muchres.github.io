@@ -14,9 +14,18 @@ color: white;
         height: 100%;
     }
 }
+.wordBox {
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+    display: inline-block;
+}
 .center {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 button {
     padding: 10px 20px;
