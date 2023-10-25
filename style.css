@@ -3,12 +3,11 @@ body {
 }
 header {
 background-color: #666;
-padding: 30px;
+padding: 20px;
 text-align: center;
-font-size: 35px;
+font-size: 20px;
 color: white;
 }
-
 @media (max-width: 600px) {
     nav, article {
         width: 100%;
@@ -21,5 +20,6 @@ color: white;
 }
 button {
     padding: 10px 20px;
-    font-size: 10px;
+    font-size: 20px;
+    align-items: center;
 }
