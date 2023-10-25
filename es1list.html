@@ -5,22 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <style>
-        .wordBox {
-            border: 1px solid black;
-            margin: 5px;
-            padding: 5px;
-            display: inline-block;
-        }
-    </style>
 </head>
 <body>
-    <input type="file" id="fileInput" accept=".txt">
-    <br>
-    <textarea id="textInput" placeholder="Enter words separated by commas"></textarea>
-    <br>
-    <button onclick="displayWords()">Display Words</button>
-    <div id="wordList"></div>
+    <div class="center">
+        <input type="file" id="fileInput" accept=".txt">
+        <br>
+        <textarea id="textInput" placeholder="Enter words separated by commas"></textarea>
+        <br>
+        <button onclick="displayWords()">Display Words</button>
+        <div id="wordList"></div>
+    </div>
 
     <script>
         function displayWords() {
