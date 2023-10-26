@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ESP2</title>
+    <title>Verbos</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
     <style>
@@ -13,7 +13,6 @@
         .center {
         margin: auto;
         padding: 10px;
-        width: 90%;
         text-align: center;
         background-color:antiquewhite;
         }
@@ -23,26 +22,46 @@
     <div class="center">
         <h1>Verbos</h1>
         <img src="item/play_button.png" alt="Play Audio" onclick="playWord()">
+        <form id="wordForm">
+            <label for="word">Word:</label><br>
+            <input type="text" id="word" name="word"><br>
+            <input type="submit" value="Submit">
+        </form>
     </div>
 
     <script>
-        var words = ['hola', 'adios', 'gracias', 'por favor', 'buenos dias'];
+        var words = ['Permitir', 'Responder'];
         var currentWord = '';
+        var utterance;
     
         function playWord() {
-            currentWord = words[Math.floor(Math.random() * words.length)];
-            var utterance = new SpeechSynthesisUtterance(currentWord);
-            utterance.lang = 'es-ES';
-            utterance.rate = 0.75;
+            if (!currentWord) {
+                currentWord = words[Math.floor(Math.random() * words.length)];
+                utterance = new SpeechSynthesisUtterance(currentWord);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.75;
             var voices = window.speechSynthesis.getVoices();
-            for(var i = 0; i < voices.length; i++) {
-                if(voices[i].lang == 'es-ES' && voices[i].gender == 'female') {
-                    utterance.voice = voices[i];
-                    break;
+                for(var i = 0; i < voices.length; i++) {
+                    if(voices[i].lang == 'es-ES' && voices[i].gender == 'female') {
+                        utterance.voice = voices[i];
+                        break;
+                    }
                 }
-            }
             window.speechSynthesis.speak(utterance);
+            }
         }
+
+        document.getElementById('wordForm').addEventListener('submit', function(event) {
+
+            var userWord = document.getElementById('word').value;
+            if (userWord.toLowerCase() === currentWord.toLowerCase()) {
+                alert('Correct!');
+            } else {
+                alert('Incorrect, try again.');
+            }
+        });
+
+        
     </script>
 </body>
 </html>
