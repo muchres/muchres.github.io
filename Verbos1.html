@@ -75,15 +75,48 @@
         <div class="center">
             <h1>Verbos 1</h1>
         <form id="Answer1">
-            <input type="button" value="Reproducir Audio">
+            <input type="button" value="Reproducir Audio" onclick="playWord()">
             <br class="br50">
-            <label class="label1" for="word">Respuesta:</label><br>
-            <input type="text" id="word" name="word" placeholder="Deletrea la palabra del audio...">
+            <label class="label1" for="ans1">Respuesta:</label><br>
+            <input type="text" id="ans1" name="ans1" placeholder="Deletrea la palabra del audio...">
             <br>
             <input type="submit" value="Enviar">
         </form>
         </div>
     </div>
+
+    <script>
+      var wordlist = ['comer', 'leer','vivir','caminar','dormir'];
+      var currentWord = '';
+
+      function playWord() {
+            if (!currentWord) {
+                currentWord = wordlist[Math.floor(Math.random() * wordlist.length)];
+                utterance = new SpeechSynthesisUtterance(currentWord);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.75;
+            var voices = window.speechSynthesis.getVoices();
+                for(var i = 0; i < voices.length; i++) {
+                    if(voices[i].lang == 'es-ES' && voices[i].gender == 'female') {
+                        utterance.voice = voices[i];
+                        break;
+                    }
+                }
+            window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        document.getElementById('Answer1').addEventListener('submit', function(event) {
+
+        var ans = document.getElementById('ans1').value;
+        if (ans.toLowerCase() === currentWord.toLowerCase()) {
+
+        } else {
+
+          }
+        });
+
+    </script>
 
 </body>
 </html>
