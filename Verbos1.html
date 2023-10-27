@@ -70,11 +70,11 @@
     <div class="bg">
         <div class="center">
             <h1>Verbos 1</h1>
-            <button class="button1" onclick="playWord()">Play</button>
+            <button class="button1" onclick="playWord()">Reproducir Palabra</button>
             <br class="br50">
             <p id="cor" style="display: none;"></p><br>
             <p>Respuesta:</p>
-            <input type="text" id="ans1" value="" placeholder="Deletrea la palabra del audio..." autocomplete="off">
+            <input type="text" id="ans1" value="" placeholder="Deletrea la palabra del audio..." autocomplete="off" onkeypress="checkEnter(event)">
             <br>
             <button class="submit1" onclick="enviar()">Enviar</button>
         </div>
@@ -129,6 +129,13 @@
             
             document.getElementById("ans1").value= "";
             pickWord();
+        }
+
+        function checkEnter(event) {
+            // If the key pressed is "Enter", call the enviar function
+            if (event.keyCode === 13) {
+                enviar();
+            }
         }
 
         pickWord();
