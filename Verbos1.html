@@ -71,6 +71,7 @@
         <div class="center">
             <h1>Verbos 1</h1>
             <button class="button1" onclick="playWord()">Play</button>
+            <br class="br50">
             <p id="cor" style="display: none;"></p><br>
             <p>Respuesta:</p>
             <input type="text" id="ans1" value="" placeholder="Deletrea la palabra del audio..." autocomplete="off">
@@ -91,8 +92,8 @@
         function playWord() {
             var msg = new SpeechSynthesisUtterance();
             msg.text = word;
-            msg.lang = "es-ES";  // set language to Spanish
-            msg.rate = 0.75;  // set rate to 75%
+            msg.lang = "es-ES";
+            msg.rate = 0.6;
 
             // Get the list of voices available
             var voices = window.speechSynthesis.getVoices();
