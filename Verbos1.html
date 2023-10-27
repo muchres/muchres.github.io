@@ -16,7 +16,7 @@
           box-sizing: border-box;
         }
         
-        input[type=submit]{
+        .submit1 {
           width: 100%;
           background-color: #666;
           color: white;
@@ -27,12 +27,8 @@
           border-radius: 4px;
           cursor: pointer;
         }
-        
-        input[type=submit], input[type=button] :hover {
-          background-color: #777;
-        }
 
-        input[type=button]{
+        .button1 {
           background-color: #666;
           color: white;
           font-size: 20px;
@@ -74,47 +70,67 @@
     <div class="bg">
         <div class="center">
             <h1>Verbos 1</h1>
-        <form id="Answer1">
-            <input type="button" value="Reproducir Audio" onclick="playWord()">
-            <br class="br50">
-            <label class="label1" for="ans1">Respuesta:</label><br>
-            <input type="text" id="ans1" name="ans1" placeholder="Deletrea la palabra del audio...">
+            <button class="button1" onclick="playWord()">Play</button>
+            <p id="cor" style="display: none;"></p><br>
+            <p>Respuesta:</p>
+            <input type="text" id="ans1" value="" placeholder="Deletrea la palabra del audio..." autocomplete="off">
             <br>
-            <input type="submit" value="Enviar">
-        </form>
+            <button class="submit1" onclick="enviar()">Enviar</button>
         </div>
     </div>
 
     <script>
-      var wordlist = ['comer', 'leer','vivir','caminar','dormir'];
-      var currentWord = '';
+        var wordlist = ['comer', 'leer','vivir','caminar','dormir'];
+        var word = "";
 
-      function playWord() {
-            if (!currentWord) {
-                currentWord = wordlist[Math.floor(Math.random() * wordlist.length)];
-                utterance = new SpeechSynthesisUtterance(currentWord);
-                utterance.lang = 'es-ES';
-                utterance.rate = 0.75;
-            var voices = window.speechSynthesis.getVoices();
-                for(var i = 0; i < voices.length; i++) {
-                    if(voices[i].lang == 'es-ES' && voices[i].gender == 'female') {
-                        utterance.voice = voices[i];
-                        break;
-                    }
-                }
-            window.speechSynthesis.speak(utterance);
-            }
+        function pickWord() {
+            var index = Math.floor(Math.random() * wordlist.length);
+            word = wordlist[index];
         }
 
-        document.getElementById('Answer1').addEventListener('submit', function(event) {
+        function playWord() {
+            var msg = new SpeechSynthesisUtterance();
+            msg.text = word;
+            msg.lang = "es-ES";  // set language to Spanish
+            msg.rate = 0.75;  // set rate to 75%
 
-        var ans = document.getElementById('ans1').value;
-        if (ans.toLowerCase() === currentWord.toLowerCase()) {
+            // Get the list of voices available
+            var voices = window.speechSynthesis.getVoices();
 
-        } else {
+            // Filter the voices to female Spanish voices
+            var spanishVoices = voices.filter(function(voice) {
+                return voice.lang === "es-ES" && voice.gender === "female";
+            });
 
-          }
-        });
+            // If there are female Spanish voices available, use the first one
+            if (spanishVoices.length > 0) {
+                msg.voice = spanishVoices[0];
+            }
+
+            window.speechSynthesis.speak(msg);
+            
+            var cor = document.getElementById("cor");
+            cor.style.display = "none";
+            cor.innerHTML = "";
+        }
+
+        function enviar() {
+            var ans1 = document.getElementById("ans1").value;
+            
+            var cor = document.getElementById("cor");
+            cor.style.display = "block";
+            
+            if (ans1.toLowerCase() == word.toLowerCase()) {
+                cor.innerHTML = "Correct! The answer is " + word;
+            } else {
+                cor.innerHTML = "Incorrect! The answer is " + word;
+            }
+            
+            document.getElementById("ans1").value= "";
+            pickWord();
+        }
+
+        pickWord();
 
     </script>
 
