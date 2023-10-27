@@ -99,14 +99,14 @@
             var voices = window.speechSynthesis.getVoices();
 
             // Filter the voices to female Spanish voices
-            /* var spanishVoices = voices.filter(function(voice) {
-                return voice.lang === "es-ES" && voice.gender === "female";
+            var spanishVoices = voices.filter(function(voice) {
+                return voice.lang === "es-ES" && voice.gender === "male";
             });
 
             // If there are female Spanish voices available, use the first one
             if (spanishVoices.length > 0) {
                 msg.voice = spanishVoices[0];
-            } */
+            }
 
             window.speechSynthesis.speak(msg);
             
