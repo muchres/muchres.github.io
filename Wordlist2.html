@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Wordlist2</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
+</head>
+
+<body>
+
+  <h2>Text Area 2</h2>
+  
+  <textarea id="myTextarea" value="" rows="30" cols="60">
+  </textarea>
+
+  <p>Click the "Transform" button to transform the text in the textarea.</p>
+  
+  <button onclick="processInput()">Transform</button>
+  <button onclick="clearInput()">Clear</button>
+  
+  <p id="output"></p>
+  
+  <script>
+    function processInput() {
+      var text = document.getElementById("myTextarea").value;
+      var rows = text.split("\n");
+      var output = "";
+      for (var i = 0; i < rows.length; i++) {
+        var items = rows[i].split("\t");
+        for (var j = 0; j < items.length; j++) {
+          items[j] = "'" + items[j] + "',";
+        }
+        output += "'" + (i+1) + "', " + items.join(" ") + "<br>";
+      }
+      document.getElementById("output").innerHTML = output;
+    }
+  
+    function clearInput() {
+      document.getElementById("myTextarea").value = "";
+      document.getElementById("output").innerHTML = "";
+    }
+  </script>
+  
+</body>
+</html>
