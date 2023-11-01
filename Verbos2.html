@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Verbos 2</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        input[type=text], select {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 10px 0;
+          font-size: 20px;
+          display: inline-block;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+        
+        .submit1 {
+          width: 100%;
+          background-color: #666;
+          color: white;
+          padding: 14px 20px;
+          margin: 10px 0;
+          font-size: 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        .button1 {
+          background-color: #666;
+          color: white;
+          font-size: 20px;
+          padding: 40px 40px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .bg {
+          border-radius: 5px;
+          background-color: #f2f2f2;
+          padding: 2px 2px 25px;
+        }
+
+        .center {
+            margin: auto;
+            width: 80%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .br50 {
+            display: block;
+            content: "";
+            margin-top: 50px;
+        }
+        .label1 {
+            font-size: 20px;
+        }
+    </style>   
+
+</head>
+
+<body>
+
+    <div class="bg">
+        <div class="center">
+            <h1>Verbos 1</h1>
+            <button id="listen">Reproducir Palabra</button>
+            <br class="br50">
+            <p id="result" style="display: none;"></p><br>
+            <p>Respuesta:</p>
+            <input type="text" id="answer" value="" placeholder="Deletrea la palabra del audio..." autocomplete="off" onkeypress="checkEnter(event)">
+            <br>
+            <button class="submit1" id="submit">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        let words;
+        let currentWord;
+
+        // Load the CSV file
+        Papa.parse("item/es3.csv", {
+            download: true,
+            header: true,
+            complete: function(results) {
+                words = results.data;
+                selectWord();
+            }
+        });
+
+        function selectWord() {
+            currentWord = words[Math.floor(Math.random() * words.length)];
+        }
+
+        document.getElementById('listen').addEventListener('click', function() {
+            let msg = new SpeechSynthesisUtterance(currentWord.Spanish);
+            msg.lang = "es-ES";
+            msg.rate = 0.5;
+            window.speechSynthesis.speak(msg);
+            document.getElementById('result').style.display = 'none';
+        });
+
+        document.getElementById('submit').addEventListener('click', function() {
+            let userAnswer = document.getElementById('answer').value;
+            if (userAnswer === currentWord.Spanish) {
+                document.getElementById('result').textContent = 'Correct! The word is ' + currentWord.Spanish + ', The English meaning is ' + currentWord.English;
+            } else {
+                document.getElementById('result').textContent = 'Incorrect. The correct spelling is ' + currentWord.Spanish + ', and the English meaning is ' + currentWord.English;
+            }
+            document.getElementById('result').style.display = 'block';
+            selectWord();
+        });
+    </script>
+
+</body>
+</html>
