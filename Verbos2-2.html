@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo"></p>
+
+<script>
+// Include the xlsx library
+var XLSX = require('xlsx');
+
+// Read the Excel file
+var workbook = XLSX.readFile('item/es3.xlsx');
+
+// Get the first sheet
+var sheet_name_list = workbook.SheetNames;
+var worksheet = workbook.Sheets[sheet_name_list[0]];
+
+// Convert the sheet to JSON
+var data = XLSX.utils.sheet_to_json(worksheet);
+
+// Select a random row
+var randomRow = data[Math.floor(Math.random() * data.length)];
+
+// Display the Spanish and English columns of the selected row in a <p> element
+document.getElementById("demo").innerHTML = "Spanish: " + randomRow["Spanish"] + ", English: " + randomRow["English"];
+</script>
+
+</body>
+</html>
