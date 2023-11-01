@@ -4,8 +4,6 @@
     <title>Verbos 2</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
         input[type=text], select {
           width: 100%;
@@ -83,27 +81,20 @@
     </div>
 
     <script>
-        var data;
-        var currentRow = "";
-
-        function loadQuiz() {
-            Papa.parse('item/es3.csv', {
-                download: true,
-                header: true,
-                complete: function(results) {
-                    data = results.data;
-                    pickWord();
-                }
-            });
-        }
+        var wordlist = ['1','To give a bath','Bañar','2','To avoid, to prevent','Evitar','3','To survive','Sobrevivir'];
+        var word = "";
+        var eng1 = "";
 
         function pickWord() {
-            currentRow = data[Math.floor(Math.random() * data.length)];
+            var randomNumber = Math.floor(Math.random() * 3) + 1;
+            var index = wordlist.indexOf(randomNumber.toString())
+            eng1 = wordlist[index + 1];
+            word = wordlist[index + 2];
         }
 
         function playWord() {
             var msg = new SpeechSynthesisUtterance();
-            msg.text = currentRow.Spanish;
+            msg.text = word;
             msg.lang = "es-ES";
             msg.rate = 0.5;
 
@@ -120,10 +111,10 @@
             var cor = document.getElementById("cor");
             cor.style.display = "block";
             
-            if (ans1.toLowerCase() == currentRow.Spanish.toLowerCase()) {
-                cor.innerHTML = "Correct! The answer is " + currentRow.Spanish + currentRow.English;
+            if (ans1.toLowerCase() == word.toLowerCase()) {
+                cor.innerHTML = "Correct! The answer is " + word + " (" + eng1 + ")";
             } else {
-                cor.innerHTML = "Incorrect! The answer is " + currentRow.Spanish + currentRow.English;
+                cor.innerHTML = "Incorrect! The answer is " + word + " (" + eng1 + ")";
             }
             
             document.getElementById("ans1").value= "";
@@ -131,12 +122,13 @@
         }
 
         function checkEnter(event) {
+            // If the key pressed is "Enter", call the enviar function
             if (event.keyCode === 13) {
                 enviar();
             }
         }
 
-        loadQuiz();
+        pickWord();
 
     </script>
 
